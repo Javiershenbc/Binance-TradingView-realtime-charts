@@ -15,6 +15,10 @@ export const useWebSocket = (pair: string, interval: string) => {
       );
       wsRef.current = ws;
 
+      ws.onopen = () => {
+        console.log(`WebSocket connected for ${pair}`);
+      };
+
       ws.onmessage = (event) => {
         const message = JSON.parse(event.data);
         if (message.k) {

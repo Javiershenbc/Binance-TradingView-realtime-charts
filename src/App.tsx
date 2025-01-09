@@ -17,7 +17,7 @@ const App: React.FC = () => {
   } = useHistoricalData(selectedPair);
   const latestData = useWebSocket(selectedPair, "1m");
   const [combinedData, setCombinedData] = useState<CandlestickData[]>([]);
-  const { bids, asks } = useOrderBook(selectedPair);
+  const { orderBook, loading, error } = useOrderBook(selectedPair);
 
   useEffect(() => {
     if (historicalData) {
@@ -67,8 +67,13 @@ const App: React.FC = () => {
         selectedPair={selectedPair}
         onChange={setSelectedPair}
       />
-      {isLoading ? <p>Loading...</p> : <Chart data={combinedData} />}
-      <OrderBook bids={bids} asks={asks} />
+      <Chart data={combinedData} loading={isLoading} />
+      <OrderBook
+        bids={orderBook.bids}
+        asks={orderBook.asks}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 };

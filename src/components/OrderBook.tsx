@@ -8,9 +8,20 @@ interface Order {
 interface OrderBookProps {
   bids: Order[];
   asks: Order[];
+  loading: boolean;
+  error: string | null;
 }
 
-const OrderBook: React.FC<OrderBookProps> = ({ bids, asks }) => {
+const OrderBook: React.FC<OrderBookProps> = ({
+  bids,
+  asks,
+  loading,
+  error,
+}) => {
+  if (loading) {
+    return <p style={{ textAlign: "center" }}>Loading Order Book...</p>;
+  }
+
   return (
     <div
       style={{
@@ -20,7 +31,7 @@ const OrderBook: React.FC<OrderBookProps> = ({ bids, asks }) => {
         marginTop: "20px",
       }}
     >
-      {/* Bids table */}
+      {/* Bids Table */}
       <div>
         <h3 style={{ textAlign: "center" }}>Bids</h3>
         <table style={{ borderCollapse: "collapse", width: "300px" }}>
@@ -55,7 +66,7 @@ const OrderBook: React.FC<OrderBookProps> = ({ bids, asks }) => {
         </table>
       </div>
 
-      {/* Asks table */}
+      {/* Asks Table */}
       <div>
         <h3 style={{ textAlign: "center" }}>Asks</h3>
         <table style={{ borderCollapse: "collapse", width: "300px" }}>

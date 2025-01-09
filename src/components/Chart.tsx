@@ -3,9 +3,10 @@ import { createChart, ISeriesApi, CandlestickData } from "lightweight-charts";
 
 interface ChartProps {
   data: CandlestickData[];
+  loading: boolean;
 }
 
-const Chart: React.FC<ChartProps> = ({ data }) => {
+const Chart: React.FC<ChartProps> = ({ data, loading }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartInstanceRef = useRef<ReturnType<typeof createChart>>();
   const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick">>();
@@ -67,6 +68,10 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
       candlestickSeriesRef.current = undefined;
     };
   }, [data]);
+
+  if (loading) {
+    return <p style={{ textAlign: "center" }}>Loading Chart... </p>;
+  }
 
   return (
     <div

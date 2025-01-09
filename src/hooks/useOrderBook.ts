@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { BINANCE_WS_BASE_URL } from "../config";
 
 interface Order {
   price: string;
@@ -10,40 +11,74 @@ interface OrderBookData {
   asks: Order[];
 }
 
-export const useOrderBook = (symbol: string, levels: number = 10) => {
+export const useOrderBook = (symbol: string, levels: number = 20) => {
   const [orderBook, setOrderBook] = useState<OrderBookData>({
     bids: [],
     asks: [],
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
 
+  let updateQueue: Order[] = [];
+
   useEffect(() => {
-    const wsUrl = `wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@depth${levels}`;
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+
+    const wsUrl = `${BINANCE_WS_BASE_URL}/${symbol.toLowerCase()}@depth${levels}`;
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
+    // Set loading to true when connecting to a new pair
+    setLoading(true);
+    setError(null);
+
+    ws.onopen = () => {
+      console.log(`WebSocket connected for ${symbol}`);
+    };
+
     ws.onmessage = (event) => {
-      const message = JSON.parse(event.data);
+      try {
+        const message = JSON.parse(event.data);
 
-      const bids = message.bids.map(([price, quantity]: [string, string]) => ({
-        price,
-        quantity,
-      }));
+        // Map bids and asks
+        const bids = message.bids
+          .slice(0, levels)
+          .map(([price, quantity]: [string, string]) => ({
+            price,
+            quantity,
+          }));
 
-      const asks = message.asks.map(([price, quantity]: [string, string]) => ({
-        price,
-        quantity,
-      }));
+        const asks = message.asks
+          .slice(0, levels)
+          .map(([price, quantity]: [string, string]) => ({
+            price,
+            quantity,
+          }));
 
-      setOrderBook({ bids, asks });
+        updateQueue = [...bids, ...asks];
+      } catch (err) {
+        console.error("Error processing WebSocket message:", err);
+        setError("Error processing data. Please refresh the page.");
+        setLoading(false);
+      }
     };
 
     ws.onerror = (error) => {
       console.error("WebSocket error:", error);
+      setError("Connection error. Please refresh the page.");
+      setLoading(false);
     };
 
     ws.onclose = () => {
       console.log("WebSocket closed");
+      if (!error) {
+        setError("Connection lost. Retrying conection.");
+      }
+      setLoading(false);
     };
 
     return () => {
@@ -52,5 +87,19 @@ export const useOrderBook = (symbol: string, levels: number = 10) => {
     };
   }, [symbol, levels]);
 
-  return orderBook;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (updateQueue.length > 0) {
+        setOrderBook({
+          bids: updateQueue.slice(0, 20),
+          asks: updateQueue.slice(20, 40),
+        });
+        updateQueue = [];
+      }
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return { orderBook, loading, error };
 };
