@@ -53,11 +53,11 @@ const App: React.FC = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center", // Centra horizontalmente
-        justifyContent: "center", // Centra verticalmente (si es necesario)
+        alignItems: "center",
+        justifyContent: "center",
         width: "90%",
         maxWidth: "1200px",
-        margin: "0 auto", // Centra el contenedor en la pantalla
+        margin: "0 auto",
         textAlign: "center",
       }}
     >

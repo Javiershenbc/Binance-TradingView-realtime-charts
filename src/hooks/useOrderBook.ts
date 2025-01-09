@@ -6,8 +6,8 @@ interface Order {
 }
 
 interface OrderBookData {
-  bids: Order[]; // Ofertas de compra
-  asks: Order[]; // Ofertas de venta
+  bids: Order[];
+  asks: Order[];
 }
 
 export const useOrderBook = (symbol: string, levels: number = 10) => {
@@ -25,7 +25,6 @@ export const useOrderBook = (symbol: string, levels: number = 10) => {
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
 
-      // Mapeo correcto de bids y asks
       const bids = message.bids.map(([price, quantity]: [string, string]) => ({
         price,
         quantity,

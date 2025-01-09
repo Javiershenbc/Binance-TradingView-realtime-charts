@@ -66,7 +66,7 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
       chartInstanceRef.current = undefined;
       candlestickSeriesRef.current = undefined;
     };
-  }, [data]); // Actualiza solo cuando los datos cambien
+  }, [data]);
 
   return (
     <div

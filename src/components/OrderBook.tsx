@@ -20,7 +20,7 @@ const OrderBook: React.FC<OrderBookProps> = ({ bids, asks }) => {
         marginTop: "20px",
       }}
     >
-      {/* Tabla de Bids */}
+      {/* Bids table */}
       <div>
         <h3 style={{ textAlign: "center" }}>Bids</h3>
         <table style={{ borderCollapse: "collapse", width: "300px" }}>
@@ -55,7 +55,7 @@ const OrderBook: React.FC<OrderBookProps> = ({ bids, asks }) => {
         </table>
       </div>
 
-      {/* Tabla de Asks */}
+      {/* Asks table */}
       <div>
         <h3 style={{ textAlign: "center" }}>Asks</h3>
         <table style={{ borderCollapse: "collapse", width: "300px" }}>

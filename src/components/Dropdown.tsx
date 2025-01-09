@@ -15,8 +15,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <FormControl
       style={{
-        width: "300px", // Ancho fijo
-        margin: "10px auto", // Centrado horizontal y con margen superior/inferior
+        width: "300px",
+        margin: "10px auto",
       }}
     >
       <InputLabel>Trading Pair</InputLabel>

@@ -1,6 +1,5 @@
-import axios from 'axios';
-
-const BINANCE_REST_BASE_URL = "https://api.binance.com/api/v3";
+import axios from "axios";
+import { BINANCE_REST_BASE_URL } from "./config";
 
 export interface OHLCV {
   time: number;
@@ -12,7 +11,11 @@ export interface OHLCV {
 }
 
 // Function to fetch historical data
-export const fetchHistoricalData = async (pair: string, interval: string, limit: number = 100): Promise<OHLCV[]> => {
+export const fetchHistoricalData = async (
+  pair: string,
+  interval: string,
+  limit: number = 100
+): Promise<OHLCV[]> => {
   const response = await axios.get(`${BINANCE_REST_BASE_URL}/klines`, {
     params: {
       symbol: pair.toUpperCase(),

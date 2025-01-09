@@ -20,7 +20,7 @@ export const useWebSocket = (pair: string, interval: string) => {
         if (message.k) {
           const kline = message.k;
           setLatestData({
-            time: (kline.t / 1000) as Time, // Convert to seconds
+            time: (kline.t / 1000) as Time,
             open: parseFloat(kline.o),
             high: parseFloat(kline.h),
             low: parseFloat(kline.l),
