@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { CandlestickData, Time } from "lightweight-charts";
-
-const BINANCE_WS_BASE_URL = "wss://stream.binance.com:9443/ws";
+import { BINANCE_WS_BASE_URL } from "../config";
 
 export const useWebSocket = (pair: string, interval: string) => {
   const [latestData, setLatestData] = useState<CandlestickData | null>(null);

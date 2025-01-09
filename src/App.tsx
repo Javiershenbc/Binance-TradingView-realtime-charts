@@ -5,6 +5,8 @@ import { useHistoricalData } from "./hooks/useHistoricalData";
 import { useWebSocket } from "./hooks/useWebSocket";
 import { CRYPTO_PAIRS } from "./config";
 import { CandlestickData } from "lightweight-charts";
+import OrderBook from "./components/OrderBook";
+import { useOrderBook } from "./hooks/useOrderBook";
 
 const App: React.FC = () => {
   const [selectedPair, setSelectedPair] = useState(CRYPTO_PAIRS[0]);
@@ -15,6 +17,7 @@ const App: React.FC = () => {
   } = useHistoricalData(selectedPair);
   const latestData = useWebSocket(selectedPair, "1m");
   const [combinedData, setCombinedData] = useState<CandlestickData[]>([]);
+  const { bids, asks } = useOrderBook(selectedPair);
 
   useEffect(() => {
     if (historicalData) {
@@ -65,6 +68,7 @@ const App: React.FC = () => {
         onChange={setSelectedPair}
       />
       {isLoading ? <p>Loading...</p> : <Chart data={combinedData} />}
+      <OrderBook bids={bids} asks={asks} />
     </div>
   );
 };
