@@ -41,6 +41,7 @@ export const useWebSocket = (pair: string, interval: string) => {
         console.log("WebSocket closed. Reconnecting...");
         retryTimeout = window.setTimeout(() => {
           console.log("Retrying...");
+          connectWebSocket();
         }, 5000);
       };
     };

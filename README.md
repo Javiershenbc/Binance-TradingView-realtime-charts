@@ -1,50 +1,80 @@
-# React + TypeScript + Vite
+# Real-Time Trading Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a **real-time trading dashboard** that displays cryptocurrency market data using the **Binance API**. It includes:
 
-Currently, two official plugins are available:
+1. A **price chart** for visualizing candlestick data (OHLCV) in real-time.
+2. An **order book** to display live bids and asks.
+3. A **dropdown** for selecting trading pairs.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The application uses:
 
-## Expanding the ESLint configuration
+- **Binance WebSocket API** for real-time updates.
+- **Binance REST API** for fetching historical data.
+- **React** with **TypeScript** for a robust and scalable architecture.
+- **React Query** for managing data fetching and caching.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. **Real-Time Chart**:
+
+   - Displays candlestick (OHLCV) data for the selected trading pair.
+   - Updates dynamically using the WebSocket API.
+
+2. **Order Book**:
+
+   - Shows live bids and asks for the selected trading pair.
+   - Displays 10 top bids and 10 top asks.
+   - Updates in real-time.
+
+3. **Dropdown for Trading Pairs**:
+
+   - Allows users to select a trading pair (e.g., BTC/USDT, ETH/USDT).
+
+4. **High-Frequency Updates**:
+   - Handles real-time updates efficiently with batching mechanisms for improved performance.
+
+---
+
+## Setup Instructions
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- **Node.js** (version 16.x or higher)
+- **npm** or **yarn**
+
+### Clone the Repository
+
+```bash
+git clone <repository-url>
+cd <repository-directory>
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Install Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Run the following command to install all necessary dependencies:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
+```
+
+### Configure the environment
+
+The project uses the Binance REST and WebSocket APIs for fetching historical and real-time data. Update the API configuration in the src/config.ts file:
+
+```bash
+export const BINANCE_REST_BASE_URL = "https://api.binance.com/api/v3";
+export const BINANCE_WS_BASE_URL = "wss://stream.binance.com:9443/ws";
+export const CRYPTO_PAIRS = ["btcusdt", "ethusdt", "solusdt", "maticusdt"];
+```
+
+## Start the development server
+
+Start the local development server:
+
+```bash
+npm run dev
 ```
