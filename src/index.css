@@ -54,16 +54,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.chart-container {
-  width: 80%;
-  height: 400px;
-  margin: 20px auto;
-  border: 1px solid #d1d4dc;
-  border-radius: 8px;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

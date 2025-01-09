@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createChart, ISeriesApi, CandlestickData } from "lightweight-charts";
+
 interface ChartProps {
   data: CandlestickData[];
 }
@@ -12,11 +13,11 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
   useEffect(() => {
     if (!chartContainerRef.current) return;
 
-    // Initialize the chart instance only once
+    // Initialize the chart once
     if (!chartInstanceRef.current) {
       chartInstanceRef.current = createChart(chartContainerRef.current, {
         width: chartContainerRef.current.clientWidth,
-        height: 300,
+        height: 400,
         layout: {
           textColor: "#000000",
         },
@@ -27,6 +28,20 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
           horzLines: {
             color: "#ebebeb",
           },
+        },
+        rightPriceScale: {
+          borderColor: "#d1d4dc",
+          scaleMargins: {
+            top: 0.1,
+            bottom: 0.1,
+          },
+        },
+        timeScale: {
+          borderColor: "#d1d4dc",
+          timeVisible: true,
+          rightOffset: 2,
+          barSpacing: 6,
+          fixLeftEdge: true,
         },
       });
 
@@ -41,7 +56,7 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
         });
     }
 
-    // Set the candlestick data when provided
+    // Initial Data config
     if (candlestickSeriesRef.current) {
       candlestickSeriesRef.current.setData(data);
     }
@@ -51,16 +66,19 @@ const Chart: React.FC<ChartProps> = ({ data }) => {
       chartInstanceRef.current = undefined;
       candlestickSeriesRef.current = undefined;
     };
-  }, [data]);
+  }, [data]); // Actualiza solo cuando los datos cambien
 
   return (
     <div
       ref={chartContainerRef}
-      className="chart-container"
       style={{
-        width: "80%", // Ocupa el 80% del contenedor principal
-        height: "400px", // Altura fija más razonable
-        margin: "0 auto", // Centra horizontalmente
+        width: "80%",
+        height: "400px",
+        margin: "0 auto",
+        border: "1px solid #d1d4dc",
+        borderRadius: "8px",
+        backgroundColor: "#ffffff",
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       }}
     />
   );

@@ -46,7 +46,19 @@ const App: React.FC = () => {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center", // Centra horizontalmente
+        justifyContent: "center", // Centra verticalmente (si es necesario)
+        width: "90%",
+        maxWidth: "1200px",
+        margin: "0 auto", // Centra el contenedor en la pantalla
+        textAlign: "center",
+      }}
+    >
+      <h2 style={{ textAlign: "center" }}>Trading Pair</h2>
       <Dropdown
         pairs={CRYPTO_PAIRS}
         selectedPair={selectedPair}
