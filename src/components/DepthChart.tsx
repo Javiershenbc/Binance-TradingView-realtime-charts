@@ -115,6 +115,7 @@ const DepthChart: React.FC<DepthChartProps> = ({ bids, asks, pair }) => {
     isBid: boolean
   ) => {
     const sortedList = [...list]
+      .filter((item) => parseFloat(item.price) > 0) // Filter out invalid prices
       .map((item) => ({
         price: parseFloat(item.price),
         quantity: parseFloat(item.quantity),
@@ -126,7 +127,7 @@ const DepthChart: React.FC<DepthChartProps> = ({ bids, asks, pair }) => {
     return sortedList.map((item) => {
       cumulativeVolume += item.quantity;
       return {
-        price: item.price.toFixed(pair.toLowerCase() === "btcusdt" ? 0 : 2), // Format dynamically for data
+        price: item.price.toFixed(2),
         cumulativeVolume,
       };
     });
