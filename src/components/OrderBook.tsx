@@ -1,4 +1,16 @@
 import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 
 interface Order {
   price: string;
@@ -19,88 +31,64 @@ const OrderBook: React.FC<OrderBookProps> = ({
   error,
 }) => {
   if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading Order Book...</p>;
+    return <CircularProgress sx={{ display: "block", mx: "auto", my: 4 }} />;
   }
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
         justifyContent: "center",
-        gap: "20px",
-        marginTop: "20px",
+        gap: 4,
+        mt: 4,
       }}
     >
-      {/* Bids Table */}
-      <div>
-        <h3 style={{ textAlign: "center" }}>Bids</h3>
-        <table style={{ borderCollapse: "collapse", width: "300px" }}>
-          <thead>
-            <tr>
-              <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                Price
-              </th>
-              <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                Quantity
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      {/* Bids Section */}
+      <TableContainer component={Paper} sx={{ width: "50%", p: 2 }}>
+        <Typography variant="h6" align="center" sx={{ mb: 2 }}>
+          Bids
+        </Typography>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Price</TableCell>
+              <TableCell>Quantity</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {bids.map((bid, index) => (
-              <tr key={index}>
-                <td
-                  style={{
-                    border: "1px solid #ccc",
-                    padding: "5px",
-                    color: "green",
-                  }}
-                >
-                  {bid.price}
-                </td>
-                <td style={{ border: "1px solid #ccc", padding: "5px" }}>
-                  {bid.quantity}
-                </td>
-              </tr>
+              <TableRow key={index}>
+                <TableCell sx={{ color: "green" }}>{bid.price}</TableCell>
+                <TableCell>{bid.quantity}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      {/* Asks Table */}
-      <div>
-        <h3 style={{ textAlign: "center" }}>Asks</h3>
-        <table style={{ borderCollapse: "collapse", width: "300px" }}>
-          <thead>
-            <tr>
-              <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                Price
-              </th>
-              <th style={{ border: "1px solid #ccc", padding: "5px" }}>
-                Quantity
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      {/* Asks Section */}
+      <TableContainer component={Paper} sx={{ width: "50%", p: 2 }}>
+        <Typography variant="h6" align="center" sx={{ mb: 2 }}>
+          Asks
+        </Typography>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Price</TableCell>
+              <TableCell>Quantity</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {asks.map((ask, index) => (
-              <tr key={index}>
-                <td
-                  style={{
-                    border: "1px solid #ccc",
-                    padding: "5px",
-                    color: "red",
-                  }}
-                >
-                  {ask.price}
-                </td>
-                <td style={{ border: "1px solid #ccc", padding: "5px" }}>
-                  {ask.quantity}
-                </td>
-              </tr>
+              <TableRow key={index}>
+                <TableCell sx={{ color: "red" }}>{ask.price}</TableCell>
+                <TableCell>{ask.quantity}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createChart, ISeriesApi, CandlestickData } from "lightweight-charts";
+import { Box, CircularProgress } from "@mui/material";
 
 interface ChartProps {
   data: CandlestickData[];
@@ -70,14 +71,14 @@ const Chart: React.FC<ChartProps> = ({ data, loading }) => {
   }, [data]);
 
   if (loading) {
-    return <p style={{ textAlign: "center" }}>Loading Chart... </p>;
+    return <CircularProgress sx={{ display: "block", mx: "auto", my: 4 }} />;
   }
 
   return (
-    <div
+    <Box
       ref={chartContainerRef}
-      style={{
-        width: "80%",
+      sx={{
+        width: "100%",
         height: "400px",
         margin: "0 auto",
         border: "1px solid #d1d4dc",
