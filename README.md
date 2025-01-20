@@ -4,7 +4,7 @@ This project is a **real-time trading dashboard** that displays cryptocurrency m
 
 1. A **price chart** for visualizing candlestick data (OHLCV) in real-time.
 2. An **order book** to display live bids and asks.
-3. A **dropdown** for selecting trading pairs.
+3. A **tab section** for selecting trading pairs.
 
 The application uses:
 
@@ -28,7 +28,7 @@ The application uses:
    - Displays 10 top bids and 10 top asks.
    - Updates in real-time.
 
-3. **Dropdown for Trading Pairs**:
+3. **Tab Section for Trading Pairs**:
 
    - Allows users to select a trading pair (e.g., BTC/USDT, ETH/USDT).
 
